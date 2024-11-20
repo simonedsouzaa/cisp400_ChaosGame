@@ -9,6 +9,8 @@
 using namespace sf;
 using namespace std;
 
+
+
 int main()
 {
 	// Create a video mode object
@@ -18,6 +20,8 @@ int main()
 	
 	vector<Vector2f> vertices;
 	vector<Vector2f> points;
+	
+	
 
 	while (window.isOpen())
 	{
@@ -29,16 +33,16 @@ int main()
 		Event event;
 		while (window.pollEvent(event))
 		{
-			Font font;
-			font.loadFromFile("arial.ttf");
+			sf::Font font;
+			font.loadFromFile("Arial.ttf");
 
-			Text text;
-			text.setFont(font);
+			sf::Text text;
 			text.setString("Hello world");
 			text.setCharacterSize(24);
 			text.setFillColor(Color::Red);
-			text.setStyle(Text::Bold | Text::Underlined);
+			text.setStyle(sf::Text::Bold | sf::Text::Underlined);
 			window.draw(text);
+
 		    if (event.type == Event::Closed)
 		    {
 					// Quit the game when the window is closed
@@ -60,7 +64,7 @@ int main()
 			    {
 				///fourth click
 				///push back to points vector
-				points.push_back(Vector2f(event.mouseButton.x, event.mouseButton.y));
+					points.push_back(Vector2f(event.mouseButton.x, event.mouseButton.y));
 			    }
 			}
 		    }
@@ -90,7 +94,7 @@ int main()
 			///push back the newly generated coord.
 			points.push_back(newPoint);
 		}
-	
+		
 		/*
 		****************************************
 		Draw
