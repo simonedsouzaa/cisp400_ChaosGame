@@ -29,6 +29,16 @@ int main()
 		Event event;
 		while (window.pollEvent(event))
 		{
+			Font font;
+			font.loadFromFile("arial.ttf");
+
+			Text text;
+			text.setFont(font);
+			text.setString("Hello world");
+			text.setCharacterSize(24);
+			text.setFillColor(Color::Red);
+			text.setStyle(Text::Bold | Text::Underlined);
+			window.draw(text);
 		    if (event.type == Event::Closed)
 		    {
 					// Quit the game when the window is closed
@@ -50,6 +60,7 @@ int main()
 			    {
 				///fourth click
 				///push back to points vector
+				points.push_back(Vector2f(event.mouseButton.x, event.mouseButton.y));
 			    }
 			}
 		    }
@@ -67,9 +78,17 @@ int main()
 		if(points.size() > 0)
 		{
 		    ///generate more point(s)
-		    ///select random vertex
-		    ///calculate midpoint between random vertex and the last point in the vector
-		    ///push back the newly generated coord.
+			int randomVertex = rand() % 3;
+			Vector2f lastPoint = points.back();
+
+			///select random vertex
+			Vector2f selectedVertex = vertices[randomVertex];
+
+			///calculate midpoint between random vertex and the last point in the vector
+			Vector2f newPoint((lastPoint.x + selectedVertex.x) / 2, (lastPoint.y + selectedVertex.y) / 2);
+			
+			///push back the newly generated coord.
+			points.push_back(newPoint);
 		}
 	
 		/*
