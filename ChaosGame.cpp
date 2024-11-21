@@ -1,10 +1,12 @@
 //Simone and Mildred
+// Include important C++ libraries here
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <iostream>
 #include <sstream>
 #include <vector>
 
+//Make the code easier to type with "using namespace"
 using namespace sf;
 using namespace std;
 
@@ -18,24 +20,22 @@ int main()
     vector<Vector2f> vertices;
     vector<Vector2f> points;
 
+    // Load the font for text
     Font font;
-    if (!font.loadFromFile("Arial.ttf"))
+    if (!font.loadFromFile("Arial.ttf"))  // Replace with the correct path if necessary
     {
         cout << "Error loading font" << endl;
         return -1;
     }
 
     // Set up text to display instructions
-    Text instructions("Click on 3 points to set the triangle vertices.", font, 30);
+    Text instructions("Click on 3 points for triangle vertices", font, 30);
     instructions.setPosition(10, 10);
     instructions.setFillColor(Color::White);
 
-    Text prompt("Click on a 4th point to start the algorithm.", font, 30);
+    Text prompt("then click on 4th point to start", font, 30);
     prompt.setPosition(10, 50);
     prompt.setFillColor(Color::White);
-
-    // To track whether the prompt has been shown
-    bool promptDisplayed = false;  
 
     while (window.isOpen())
     {
@@ -64,14 +64,9 @@ int main()
                     {
                         vertices.push_back(Vector2f(event.mouseButton.x, event.mouseButton.y));
                     }
-                    else if (vertices.size() == 3 && !promptDisplayed)
+                    else if (vertices.size() == 3 && points.size() == 0)
                     {
-                        // Show the prompt after the 3rd vertex is clicked
-                        promptDisplayed = true;
-                    }
-                    else if (points.size() == 0 && promptDisplayed)
-                    {
-                        // Store the 4th click as the starting point for the chaos game
+                        // Storing  4th click as the starting point
                         points.push_back(Vector2f(event.mouseButton.x, event.mouseButton.y));
                     }
                 }
@@ -91,14 +86,15 @@ int main()
 
         if (points.size() > 0)
         {
-            // Generate more points for the chaos game algorithm
+            // generate more points for the chaos game algorithm
             Vector2f lastPoint = points.back();
-			// Randomly select one of the 3 vertices
+	    //select random vertex
             int randomVertexIndex = rand() % 3;  
             Vector2f randomVertex = vertices[randomVertexIndex];
             
-            // Calculate midpoint between random vertex and last point
+            // calculate midpoint between random vertex and last point
             Vector2f newPoint = (lastPoint + randomVertex) / 2.f;
+	    //push back the newly generated coord.
             points.push_back(newPoint);
         }
 
@@ -121,19 +117,16 @@ int main()
         // Draw the chaos game points as red circles
         for (size_t i = 0; i < points.size(); ++i)
         {
-			// Smaller red dots
-            RectangleShape pointShape(Vector2f(2, 2));  
+            RectangleShape pointShape(Vector2f(2, 2));  // Smaller red dots
             pointShape.setPosition(points[i]);
-            pointShape.setFillColor(Color::White);
+            pointShape.setFillColor(Color::Red);
             window.draw(pointShape);
         }
 
-        // Draw the instructions and prompt texts
+        // Draw all prompts and instructions
         window.draw(instructions);
-        if (promptDisplayed)
-        {
-            window.draw(prompt);
-        }
+        window.draw(prompt);
+        window.draw(chaosGamePrompt);
 
         window.display();
     }
