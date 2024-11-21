@@ -33,7 +33,7 @@ int main()
     prompt.setPosition(10, 50);
     prompt.setFillColor(Color::White);
 
-	// To track whether the prompt has been shown
+    // To track whether the prompt has been shown
     bool promptDisplayed = false;  
 
     while (window.isOpen())
