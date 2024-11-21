@@ -126,7 +126,6 @@ int main()
         // Draw all prompts and instructions
         window.draw(instructions);
         window.draw(prompt);
-        window.draw(chaosGamePrompt);
 
         window.display();
     }
